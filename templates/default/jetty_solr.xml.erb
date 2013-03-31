@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure.dtd">
+
+<Configure class="org.eclipse.jetty.webapp.WebAppContext">
+  <Set name="contextPath">/solr</Set>
+  <Set name="war">
+    <SystemProperty name="jetty.home" default="."/>/webapps/solr.war</Set>
+    <Set name="extractWAR">true</Set>
+    <Set name="copyWebDir">false</Set>
+    <Set name="defaultsDescriptor"><SystemProperty name="jetty.home" default="."/>/etc/webdefault.xml</Set>
+    <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+      <Arg>/solr/home</Arg>
+      <Arg type="java.lang.String"><%= node['solr']['home'] %>/</Arg>
+      <Arg type="java.lang.Boolean">true</Arg>
+    </New>
+</Configure>
