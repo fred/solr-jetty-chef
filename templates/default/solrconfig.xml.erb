@@ -147,8 +147,8 @@
          before flushing.
          If both ramBufferSizeMB and maxBufferedDocs is set, then
          Lucene will flush based on whichever limit is hit first.  -->
-    <!-- <ramBufferSizeMB>32</ramBufferSizeMB> -->
-    <!-- <maxBufferedDocs>1000</maxBufferedDocs> -->
+    <ramBufferSizeMB>64</ramBufferSizeMB>
+    <maxBufferedDocs>20000</maxBufferedDocs>
 
     <!-- Expert: Merge Policy 
          The Merge Policy in Lucene controls how merging of segments is done.
@@ -332,7 +332,7 @@
 
        <updateLog>
          <str name="dir">${solr.data.dir:}</str>
-       </updateLog> -->
+       </updateLog>
 
     <!-- softAutoCommit is like autoCommit except it causes a
          'soft' commit which only ensures that changes are visible
@@ -470,9 +470,9 @@
                and old cache.  
       -->
     <filterCache class="solr.FastLRUCache"
-                 size="5120"
-                 initialSize="512"
-                 autowarmCount="0"/>
+                 size="16384"
+                 initialSize="4096"
+                 autowarmCount="4096"/>
 
     <!-- Query Result Cache
          
@@ -480,9 +480,9 @@
          (DocList) based on a query, a sort, and the range of documents requested.  
       -->
     <queryResultCache class="solr.LRUCache"
-                     size="5120"
-                     initialSize="512"
-                     autowarmCount="0"/>
+                      size="16384"
+                      initialSize="4096"
+                      autowarmCount="1024"/>
    
     <!-- Document Cache
 
@@ -491,9 +491,9 @@
          this cache will not be autowarmed.  
       -->
     <documentCache class="solr.LRUCache"
-                   size="5120"
-                   initialSize="512"
-                   autowarmCount="0"/>
+                   size="16384"
+                   initialSize="16384"/>
+
     
     <!-- Field Value Cache
          
@@ -503,8 +503,8 @@
       -->
     
        <fieldValueCache class="solr.FastLRUCache"
-                        size="5120"
-                        autowarmCount="128"
+                        size="16384"
+                        autowarmCount="1024"
                         showItems="32" />
       
 

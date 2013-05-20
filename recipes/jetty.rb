@@ -23,11 +23,8 @@ end
 
 
 version = node['jetty']['source']['version']
-source_url = node['jetty']['source']['url'] ||
-  "http://download.eclipse.org/jetty/#{version}/dist/jetty-distribution-#{version}.tar.gz"
-  # "http://192.168.56.1/jetty-distribution-#{version}.tar.gz"
+source_url = node['jetty']['source']['url']
 tarball_name = "jetty-distribution-#{version}.tar.gz"
-
 
 
 directory node['jetty']['home'] do
@@ -59,21 +56,31 @@ bash "install" do
   EOH
 end
 
-bash "setup-directory" do
-  user node['jetty']['user']
-  cwd node['jetty']['home']
-  code <<-EOH
-    rm -rf ./contexts/*
-    rm -rf ./webapps/*
-    cp #{node['solr']['home']}/solr.war ./webapps/solr.war
-  EOH
+file "#{node['jetty']['home']}/start.d/900-demo.ini" do
+  action :delete
+end
+file "#{node['jetty']['home']}/etc/jetty-demo.xml" do
+  action :delete
+end
+directory "#{node['jetty']['home']}/contexts/" do
+  action :delete
+  recursive true
+end
+directory "#{node['jetty']['home']}/webapps.demo/" do
+  action :delete
+  recursive true
+end
+directory "#{node['jetty']['home']}/webapps/" do
+  action :delete
+  recursive true
 end
 
-template "/etc/default/jetty" do
-  source "jettyrc.erb"
-  owner "root"
-  group "root"
-  mode "0644"
+directory "#{node['jetty']['home']}/webapps/" do
+  owner node['jetty']['user']
+  group node['jetty']['group']
+  mode  00755
+  action :create
+  recursive true
 end
 
 directory "#{node['jetty']['home']}/contexts/" do
@@ -91,3 +98,26 @@ template "#{node['jetty']['home']}/contexts/solr.xml" do
   mode "0644"
 end
 
+template "/etc/default/jetty" do
+  source "jettyrc.erb"
+  owner "root"
+  group "root"
+  mode "0644"
+  only_if do ::File.directory?("/etc/default") end
+end
+
+template "#{node['jetty']['home']}/resources/log4j.properties" do
+  source "log4j.properties"
+  owner node['jetty']['user']
+  group node['jetty']['group']
+  mode "0644"
+end
+
+bash "copy solr.war and libs" do
+  user node['jetty']['user']
+  cwd node['jetty']['home']
+  code <<-EOH
+    cp #{node['solr']['home']}/solr.war ./webapps/solr.war
+    cp #{node['solr']['home']}/example/lib/ext/* ./lib/ext/
+  EOH
+end

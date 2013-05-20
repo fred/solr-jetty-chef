@@ -1,4 +1,4 @@
-2#
+#
 # Cookbook Name:: solr
 # Recipe:: default
 #
@@ -107,7 +107,8 @@ bash "copy files" do
   user node['solr']['user']
   cwd node['solr']['home']
   code <<-EOH
-    rm -rf docs examples licenses dist contrib
+    rm -rf docs licenses example dist contrib
+    cp -a #{Chef::Config[:file_cache_path]}/solr-#{node['solr']['version']}/example ./
     cp -a #{Chef::Config[:file_cache_path]}/solr-#{node['solr']['version']}/dist ./
     cp -a #{Chef::Config[:file_cache_path]}/solr-#{node['solr']['version']}/contrib ./
     cp dist/solr-#{node['solr']['version']}.war solr.war
