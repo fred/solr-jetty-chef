@@ -44,7 +44,7 @@ Attributes
     <td><tt>['solr']['version']</tt></td>
     <td>String</td>
     <td>Version of Solr to download</td>
-    <td><tt>4.2.0</tt></td>
+    <td><tt>4.3.0</tt></td>
   </tr>
   <tr>
     <td><tt>['solr']['directory']</tt></td>
