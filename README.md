@@ -17,6 +17,11 @@ Enabled Features:
 - Document cache 5120
 - Search Filter cache 5120
 
+Tested on:
+
+- Solr 4.3.0
+- Jetty 9.0.3
+
 
 Requirements
 ------------
