@@ -74,12 +74,23 @@ Usage
 #### solr::default
 
 e.g.
-Just include `solr` in your node's `run_list`:
+Just include `solr` and `solr::jetty` in your node's `run_list`:
 
 ```json
+
 {
+  "solr": {
+    "version": "4.3.0",
+    "user": "fred",
+    "group": "staff"
+  },
+  "jetty": {
+    "user": "fred",
+    "group": "staff"
+  },
   "run_list": [
-    "recipe[solr]"
+    "recipe[solr]",
+    "recipe[solr::jetty]"
   ]
 }
 ```
