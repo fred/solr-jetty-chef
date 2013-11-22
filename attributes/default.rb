@@ -20,7 +20,7 @@ default['solr']['cores'] = [
 default['solr']['lucene_match_version'] = "LUCENE_CURRENT"
 
 # use 8.1.9.v20130131 if you need Java6 support
-default["jetty"]["source"]["version"]  = "9.0.3.v20130506"
+default["jetty"]["source"]["version"]  = "9.1.0.v20131115"
 default['jetty']['source']['checksum'] = "aa91d5629c325e6fc87bf562c480d04ed36d8783"
 
 version = node['jetty']['source']['version']
